@@ -18,23 +18,23 @@ class ToDoPageAdapter : RecyclerView.Adapter<ToDoPageAdapter.VH>() {
     private var deleteClickListener: ((ToDoEntity) -> Unit)? = null
     private var editClickListener: ((ToDoEntity) -> Unit)? = null
 
-    private var itemSelectedStateChangeListener: ((ToDoEntity) -> Unit)? = null
-
-    fun setItemSelectedStateChangeListener(block: (ToDoEntity) -> Unit) {
-        itemSelectedStateChangeListener = block
-    }
-
-    fun setItemClickListener(block: (ToDoEntity) -> Unit) {
-        itemClickListener = block
-    }
-
-
-    private var itemLongClickListener: ((Unit) -> Unit)? = null
-
-
-    fun setItemLongClickListener(block: (Unit) -> Unit) {
-        itemLongClickListener = block
-    }
+//    private var itemSelectedStateChangeListener: ((ToDoEntity) -> Unit)? = null
+//
+//    fun setItemSelectedStateChangeListener(block: (ToDoEntity) -> Unit) {
+//        itemSelectedStateChangeListener = block
+//    }
+//
+//    fun setItemClickListener(block: (ToDoEntity) -> Unit) {
+//        itemClickListener = block
+//    }
+//
+//
+//    private var itemLongClickListener: ((Unit) -> Unit)? = null
+//
+//
+//    fun setItemLongClickListener(block: (Unit) -> Unit) {
+//        itemLongClickListener = block
+//    }
 
     var isSelected = false
 
@@ -55,34 +55,34 @@ class ToDoPageAdapter : RecyclerView.Adapter<ToDoPageAdapter.VH>() {
         private val time = view.findViewById<TextView>(R.id.tvTimePageTodo)
         private val delete = view.findViewById<ImageView>(R.id.delete)
         private val edit = view.findViewById<ImageView>(R.id.edit)
-        private val checkbox = view.findViewById<ImageButton>(R.id.checkbox)
-        private val bosilish = view.findViewById<View>(R.id.bosilish)
+//        private val checkbox = view.findViewById<ImageButton>(R.id.checkbox)
+//        private val bosilish = view.findViewById<View>(R.id.bosilish)
 
         fun bind() {
             val item = oldList[adapterPosition]
             title.text = item.title
             time.text = item.date
-            if (isSelected) {
-                checkbox.visibility = View.VISIBLE
-                if (getItem(adapterPosition).isChecked) {
-                    checkbox.setImageResource(R.drawable.ic_baseline_check_circle_24)
-                } else {
-                    checkbox.setImageResource(R.drawable.ic_baseline_radio_button_unchecked_24)
-                }
-            } else
-                checkbox.visibility = View.GONE
+//            if (isSelected) {
+//                checkbox.visibility = View.VISIBLE
+//                if (getItem(adapterPosition).isChecked) {
+//                    checkbox.setImageResource(R.drawable.ic_baseline_check_circle_24)
+//                } else {
+//                    checkbox.setImageResource(R.drawable.ic_baseline_radio_button_unchecked_24)
+//                }
+//            } else
+//                checkbox.visibility = View.GONE
         }
 
         init {
-            bosilish.setOnClickListener {
-                if (!isSelected)
-                    itemClickListener?.invoke(getItem(adapterPosition))
-            }
-
-            bosilish.setOnLongClickListener {
-                itemLongClickListener?.invoke(Unit)
-                true
-            }
+//            bosilish.setOnClickListener {
+//                if (!isSelected)
+//                    itemClickListener?.invoke(getItem(adapterPosition))
+//            }
+//
+//            bosilish.setOnLongClickListener {
+////                itemLongClickListener?.invoke(Unit)
+//                true
+//            }
 
             delete.setOnClickListener {
                 deleteClickListener?.invoke(oldList[adapterPosition])
@@ -92,15 +92,15 @@ class ToDoPageAdapter : RecyclerView.Adapter<ToDoPageAdapter.VH>() {
                 editClickListener?.invoke(oldList[adapterPosition])
             }
 
-            checkbox.setOnClickListener {
-                if (getItem(adapterPosition).isChecked) {
-                    checkbox.setImageResource(R.drawable.ic_baseline_radio_button_unchecked_24)
-                } else {
-                    checkbox.setImageResource(R.drawable.ic_baseline_check_circle_24)
-                }
-                getItem(adapterPosition).isChecked = !getItem(adapterPosition).isChecked
-                itemSelectedStateChangeListener?.invoke(getItem(adapterPosition))
-            }
+//            checkbox.setOnClickListener {
+//                if (getItem(adapterPosition).isChecked) {
+//                    checkbox.setImageResource(R.drawable.ic_baseline_radio_button_unchecked_24)
+//                } else {
+//                    checkbox.setImageResource(R.drawable.ic_baseline_check_circle_24)
+//                }
+//                getItem(adapterPosition).isChecked = !getItem(adapterPosition).isChecked
+//                itemSelectedStateChangeListener?.invoke(getItem(adapterPosition))
+//            }
 
         }
     }

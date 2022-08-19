@@ -73,39 +73,39 @@ class ToDoPage : Fragment(R.layout.page_todo) {
             viewModel.triggerEditScreen(it.id)
         }
 
-        adapter.setItemLongClickListener {
-            actionBar.visibility = View.VISIBLE
-            txtSelectedCount.text = "Selected: 0"
-            adapter.setSelectedState(true)
-        }
-
-        adapter.setItemClickListener {
-            Toast.makeText(requireContext(), "${it.title} Clicked", Toast.LENGTH_SHORT).show()
-        }
-
-        adapter.setItemSelectedStateChangeListener {
-            if (it.isChecked) {
-                selectedItemList.add(it)
-            } else {
-                selectedItemList.remove(it)
-            }
-            txtSelectedCount.text = "Selected: ${selectedItemList.size}"
-        }
-
-        btnClearChecked.setOnClickListener {
-            adapter.setSelectedState(false)
-            selectedItemList.forEach {
-                it.isChecked = false
-            }
-            selectedItemList.clear()
-            actionBar.visibility = View.GONE
-        }
-
-        btnDelete.setOnClickListener {
-            viewModel.deleteAll(selectedItemList)
-            adapter.setSelectedState(false)
-            actionBar.visibility=View.GONE
-        }
+//        adapter.setItemLongClickListener {
+//            actionBar.visibility = View.VISIBLE
+//            txtSelectedCount.text = "Selected: 0"
+//            adapter.setSelectedState(true)
+//        }
+//
+//        adapter.setItemClickListener {
+//            Toast.makeText(requireContext(), "${it.title} Clicked", Toast.LENGTH_SHORT).show()
+//        }
+//
+//        adapter.setItemSelectedStateChangeListener {
+//            if (it.isChecked) {
+//                selectedItemList.add(it)
+//            } else {
+//                selectedItemList.remove(it)
+//            }
+//            txtSelectedCount.text = "Selected: ${selectedItemList.size}"
+//        }
+//
+//        btnClearChecked.setOnClickListener {
+//            adapter.setSelectedState(false)
+//            selectedItemList.forEach {
+//                it.isChecked = false
+//            }
+//            selectedItemList.clear()
+//            actionBar.visibility = View.GONE
+//        }
+//
+//        btnDelete.setOnClickListener {
+//            viewModel.deleteAll(selectedItemList)
+//            adapter.setSelectedState(false)
+//            actionBar.visibility=View.GONE
+//        }
 
         adapter.deleteItemClickListenere { data ->
             viewModel.update(
