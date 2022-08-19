@@ -59,7 +59,7 @@ class DonePage : Fragment(R.layout.page_done) {
                     data.content,
                     data.date,
                     data.state,
-                    true
+                    true, false
                 )
             )
             Snackbar.make(container, data.title, Snackbar.LENGTH_SHORT)
@@ -71,7 +71,7 @@ class DonePage : Fragment(R.layout.page_done) {
                             data.content,
                             data.date,
                             data.state,
-                            false
+                            false, false
                         )
                     )
                 }.show()

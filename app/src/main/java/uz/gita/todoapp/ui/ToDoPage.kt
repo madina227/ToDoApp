@@ -3,6 +3,9 @@ package uz.gita.mockexamtodo.ui
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -20,6 +23,12 @@ class ToDoPage : Fragment(R.layout.page_todo) {
     private val adapter: ToDoPageAdapter by lazy { ToDoPageAdapter() }
     private lateinit var container: RecyclerView
     private lateinit var emptyPlace: View
+    private lateinit var txtSelectedCount: TextView
+    private lateinit var btnClearChecked: ImageButton
+    private lateinit var actionBar: View
+    private lateinit var btnDelete: ImageButton
+
+    private val selectedItemList = mutableListOf<ToDoEntity>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +44,11 @@ class ToDoPage : Fragment(R.layout.page_todo) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        txtSelectedCount = view.findViewById(R.id.txtSelectedCount)
+        btnClearChecked = view.findViewById(R.id.btnClearChecked)
+        actionBar = view.findViewById(R.id.actionBar)
         container = view.findViewById(R.id.container_todo)
+        btnDelete = view.findViewById(R.id.btnDeleteChecked)
         container.adapter = adapter
 
         emptyPlace = view.findViewById(R.id.emptyPlaceholder)
@@ -60,6 +73,40 @@ class ToDoPage : Fragment(R.layout.page_todo) {
             viewModel.triggerEditScreen(it.id)
         }
 
+        adapter.setItemLongClickListener {
+            actionBar.visibility = View.VISIBLE
+            txtSelectedCount.text = "Selected: 0"
+            adapter.setSelectedState(true)
+        }
+
+        adapter.setItemClickListener {
+            Toast.makeText(requireContext(), "${it.title} Clicked", Toast.LENGTH_SHORT).show()
+        }
+
+        adapter.setItemSelectedStateChangeListener {
+            if (it.isChecked) {
+                selectedItemList.add(it)
+            } else {
+                selectedItemList.remove(it)
+            }
+            txtSelectedCount.text = "Selected: ${selectedItemList.size}"
+        }
+
+        btnClearChecked.setOnClickListener {
+            adapter.setSelectedState(false)
+            selectedItemList.forEach {
+                it.isChecked = false
+            }
+            selectedItemList.clear()
+            actionBar.visibility = View.GONE
+        }
+
+        btnDelete.setOnClickListener {
+            viewModel.deleteAll(selectedItemList)
+            adapter.setSelectedState(false)
+            actionBar.visibility=View.GONE
+        }
+
         adapter.deleteItemClickListenere { data ->
             viewModel.update(
                 ToDoEntity(
@@ -68,7 +115,8 @@ class ToDoPage : Fragment(R.layout.page_todo) {
                     data.content,
                     data.date,
                     data.state,
-                    true
+                    true,
+                    false
                 )
             )
             Snackbar.make(container, data.title, Snackbar.LENGTH_SHORT)
@@ -80,6 +128,7 @@ class ToDoPage : Fragment(R.layout.page_todo) {
                             data.content,
                             data.date,
                             data.state,
+                            false,
                             false
                         )
                     )
@@ -118,6 +167,7 @@ class ToDoPage : Fragment(R.layout.page_todo) {
                             data.content,
                             data.date,
                             1,
+                            false,
                             false
                         )
                     )

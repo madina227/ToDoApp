@@ -26,4 +26,8 @@ class RepositoryImpl : Repository {
     override fun getItem(id: Int): ToDoEntity {
        return todoDao.getItem(id)
     }
+
+    override fun deleteAll(list: List<ToDoEntity>) {
+        todoDao.deleteAll(list)
+    }
 }

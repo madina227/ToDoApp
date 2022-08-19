@@ -1,13 +1,13 @@
 <com.zerobranch.layout.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/swipe_layout"
-    app:isTogether="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="10dp"
     android:layout_marginTop="4dp"
     android:layout_marginBottom="5dp"
     app:draggedItem="@id/drag_item"
+    app:isTogether="true"
     app:rightItem="@id/right_view"
     app:swipeDirection="left">
 
@@ -37,30 +37,50 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/drag_item"
+        android:id="@+id/bosilish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#F9920D"
+        android:orientation="horizontal">
 
-        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvTitlepageTodo"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/drag_item"
+            android:layout_width="0dp"
+            android:layout_weight="9"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="@string/app_name"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvTimePageTodo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="16dp"
-            android:paddingBottom="16dp"
-            android:text="@string/app_name"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+            <TextView
+                android:id="@+id/tvTitlepageTodo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="@string/app_name"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvTimePageTodo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="16dp"
+                android:text="@string/app_name"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+        <ImageButton
+            android:id="@+id/checkbox"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="60dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:layout_gravity="center"
+            android:background="?selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_baseline_radio_button_unchecked_24"
+            android:visibility="visible" />
     </LinearLayout>
 </com.zerobranch.layout.SwipeLayout>

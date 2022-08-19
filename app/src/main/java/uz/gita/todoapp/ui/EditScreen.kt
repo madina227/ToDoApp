@@ -59,7 +59,7 @@ class EditScreen : Fragment(R.layout.screen_update) {
             val description = editDescription.text.toString()
             val date = editDate.text.toString()
             if (title.isNotEmpty() && description.isNotEmpty() && date.isNotEmpty()) {
-                viewModel.update(ToDoEntity(id, title, description, date, item.state, false))
+                viewModel.update(ToDoEntity(id, title, description, date, item.state, false, false))
             }
         }
         val c = Calendar.getInstance()

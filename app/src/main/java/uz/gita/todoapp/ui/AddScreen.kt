@@ -71,8 +71,8 @@ class AddScreen : Fragment(R.layout.screen_add) {
             val date = inputDate.text.toString()
 
             if (title.length in 6..20 && description.length > 20 && date.isNotEmpty()) {
-                viewModel.insert(ToDoEntity(0, title, description, date, 0, false))
-            } else Toast.makeText(requireContext(), "hammasini to'ldiring", Toast.LENGTH_SHORT)
+                viewModel.insert(ToDoEntity(0, title, description, date, 0, false, false))
+            } else Toast.makeText(requireContext(), "hammasini to'g'ri to'ldiring", Toast.LENGTH_SHORT)
                 .show()
         }
     }

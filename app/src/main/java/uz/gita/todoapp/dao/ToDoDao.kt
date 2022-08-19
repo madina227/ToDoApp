@@ -20,4 +20,7 @@ interface ToDoDao {
 
     @Delete
     fun delete(toDoEntity: ToDoEntity)
+
+    @Delete
+    fun deleteAll(list: List<ToDoEntity>)
 }

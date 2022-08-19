@@ -21,4 +21,6 @@ interface ToDoViewModel {
 
     fun getAllTodos(state: Int)
 
+    fun deleteAll(list: List<ToDoEntity>)
+
 }

@@ -13,5 +13,7 @@ data class ToDoEntity(
     val date: String,
     val state: Int,
     @ColumnInfo(name = "is_removed")
-    val isRemoved: Boolean
+    val isRemoved: Boolean,
+    @ColumnInfo(name = "is_checked")
+    var isChecked: Boolean
 )

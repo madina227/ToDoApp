@@ -3,6 +3,7 @@ package uz.gita.todomockexam.ui.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -12,10 +13,30 @@ import uz.gita.todoapp.entity.ToDoEntity
 
 class ToDoPageAdapter : RecyclerView.Adapter<ToDoPageAdapter.VH>() {
     private val oldList: ArrayList<ToDoEntity> = ArrayList()
-    private var itemClickListener: ((Int) -> Unit)? = null
-    private var itemLongClickListener: ((Int) -> Unit)? = null
+    private var itemClickListener: ((ToDoEntity) -> Unit)? = null
+//    private var itemLongClickListener: ((Int) -> Unit)? = null
     private var deleteClickListener: ((ToDoEntity) -> Unit)? = null
     private var editClickListener: ((ToDoEntity) -> Unit)? = null
+
+    private var itemSelectedStateChangeListener: ((ToDoEntity) -> Unit)? = null
+
+    fun setItemSelectedStateChangeListener(block: (ToDoEntity) -> Unit) {
+        itemSelectedStateChangeListener = block
+    }
+
+    fun setItemClickListener(block: (ToDoEntity) -> Unit) {
+        itemClickListener = block
+    }
+
+
+    private var itemLongClickListener: ((Unit) -> Unit)? = null
+
+
+    fun setItemLongClickListener(block: (Unit) -> Unit) {
+        itemLongClickListener = block
+    }
+
+    var isSelected = false
 
 
     fun submitList(newList: List<ToDoEntity>) {
@@ -34,22 +55,33 @@ class ToDoPageAdapter : RecyclerView.Adapter<ToDoPageAdapter.VH>() {
         private val time = view.findViewById<TextView>(R.id.tvTimePageTodo)
         private val delete = view.findViewById<ImageView>(R.id.delete)
         private val edit = view.findViewById<ImageView>(R.id.edit)
+        private val checkbox = view.findViewById<ImageButton>(R.id.checkbox)
+        private val bosilish = view.findViewById<View>(R.id.bosilish)
 
         fun bind() {
             val item = oldList[adapterPosition]
             title.text = item.title
             time.text = item.date
-
+            if (isSelected) {
+                checkbox.visibility = View.VISIBLE
+                if (getItem(adapterPosition).isChecked) {
+                    checkbox.setImageResource(R.drawable.ic_baseline_check_circle_24)
+                } else {
+                    checkbox.setImageResource(R.drawable.ic_baseline_radio_button_unchecked_24)
+                }
+            } else
+                checkbox.visibility = View.GONE
         }
 
         init {
-            view.setOnLongClickListener {
-                itemLongClickListener?.invoke(oldList[adapterPosition].id)
-                true
+            bosilish.setOnClickListener {
+                if (!isSelected)
+                    itemClickListener?.invoke(getItem(adapterPosition))
             }
 
-            view.setOnClickListener {
-                itemClickListener?.invoke(oldList[adapterPosition].id)
+            bosilish.setOnLongClickListener {
+                itemLongClickListener?.invoke(Unit)
+                true
             }
 
             delete.setOnClickListener {
@@ -60,7 +92,21 @@ class ToDoPageAdapter : RecyclerView.Adapter<ToDoPageAdapter.VH>() {
                 editClickListener?.invoke(oldList[adapterPosition])
             }
 
+            checkbox.setOnClickListener {
+                if (getItem(adapterPosition).isChecked) {
+                    checkbox.setImageResource(R.drawable.ic_baseline_radio_button_unchecked_24)
+                } else {
+                    checkbox.setImageResource(R.drawable.ic_baseline_check_circle_24)
+                }
+                getItem(adapterPosition).isChecked = !getItem(adapterPosition).isChecked
+                itemSelectedStateChangeListener?.invoke(getItem(adapterPosition))
+            }
+
         }
+    }
+    fun setSelectedState(state: Boolean) {
+        isSelected = state
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
@@ -77,14 +123,6 @@ class ToDoPageAdapter : RecyclerView.Adapter<ToDoPageAdapter.VH>() {
         return oldList.size
     }
 
-    fun triggerItemClickListener(block: (Int) -> Unit) {
-        itemClickListener = block
-    }
-
-    fun triggerItemLongClickListener(block: (Int) -> Unit) {
-        itemLongClickListener = block
-    }
-
     fun deleteItemClickListenere(block: (ToDoEntity) -> Unit) {
         deleteClickListener = block
     }
@@ -92,6 +130,4 @@ class ToDoPageAdapter : RecyclerView.Adapter<ToDoPageAdapter.VH>() {
     fun editClickListener(block: (ToDoEntity) -> Unit) {
         editClickListener = block
     }
-
-
 }

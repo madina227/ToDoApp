@@ -56,4 +56,8 @@ class ToDoViewModelImpl : ToDoViewModel, ViewModel() {
             allToDoes.value = it
         }
     }
+
+    override fun deleteAll(list: List<ToDoEntity>) {
+        repo.deleteAll(list)
+    }
 }

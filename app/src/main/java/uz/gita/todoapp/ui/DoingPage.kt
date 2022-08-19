@@ -62,7 +62,7 @@ class DoingPage : Fragment(R.layout.page_doing) {
                     data.content,
                     data.date,
                     data.state,
-                    true
+                    true,false
                 )
             )
             Snackbar.make(container, data.title, Snackbar.LENGTH_SHORT)
@@ -74,7 +74,7 @@ class DoingPage : Fragment(R.layout.page_doing) {
                             data.content,
                             data.date,
                             data.state,
-                            false
+                            false, false
                         )
                     )
                 }.show()
@@ -100,7 +100,7 @@ class DoingPage : Fragment(R.layout.page_doing) {
                             data.content,
                             data.date,
                             2,
-                            false
+                            false, false
                         )
                     )
 

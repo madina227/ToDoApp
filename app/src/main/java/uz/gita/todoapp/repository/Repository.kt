@@ -9,4 +9,6 @@ interface Repository {
     fun update(toDoEntity: ToDoEntity)
     fun getAll(state:Int): LiveData<List<ToDoEntity>>
     fun getItem(id:Int):ToDoEntity
+
+    fun deleteAll(list: List<ToDoEntity>)
 }
